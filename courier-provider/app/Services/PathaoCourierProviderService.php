@@ -14,7 +14,7 @@ class PathaoCourierProviderService
 {
     protected string $baseUrl;
     protected string $accessToken = '';
-    protected int $batchSize = 50; // Number of records to insert in a single batch
+    protected int $batchSize = 100; // Number of records to insert in a single batch
 
     /**
      * @throws \Exception
@@ -132,6 +132,9 @@ class PathaoCourierProviderService
      */
     public function storeCourierProviderData(): array
     {
+        set_time_limit(0);
+        ini_set('memory_limit', '512M');
+
         try {
             $citiesResponse = Http::withHeaders($this->getHeaders())
                 ->get("{$this->baseUrl}/aladdin/api/v1/city-list");
